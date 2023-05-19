@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer and Stopwatch</title>
+</head>
+<body>
+  <h1>Timer and Stopwatch</h1>
+  
+  <h2>Timer</h2>
+  <p>Countdown: <span id="timer">00:00:00</span></p>
+  <button onclick="startTimer()">Start</button>
+  <button onclick="stopTimer()">Stop</button>
+  <button onclick="resetTimer()">Reset</button>
+  
+  <h2>Stopwatch</h2>
+  <p>Elapsed Time: <span id="stopwatch">00:00:00</span></p>
+  <button onclick="startStopwatch()">Start</button>
+  <button onclick="stopStopwatch()">Stop</button>
+  <button onclick="resetStopwatch()">Reset</button>
+  
+  <script>
+    // Timer variables
+    let timerInterval;
+    let timerSeconds = 0;
+    let timerMinutes = 0;
+    let timerHours = 0;
+    
+    // Stopwatch variables
+    let stopwatchInterval;
+    let stopwatchSeconds = 0;
+    let stopwatchMinutes = 0;
+    let stopwatchHours = 0;
+    
+    function startTimer() {
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+    
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+    
+    function resetTimer() {
+      stopTimer();
+      timerSeconds = 0;
+      timerMinutes = 0;
+      timerHours = 0;
+      document.getElementById("timer").textContent = "00:00:00";
+    }
+    
+    function updateTimer() {
+      timerSeconds++;
+      
+      if (timerSeconds === 60) {
+        timerSeconds = 0;
+        timerMinutes++;
+      }
+      
+      if (timerMinutes === 60) {
+        timerMinutes = 0;
+        timerHours++;
+      }
+      
+      const formattedTime = formatTime(timerHours, timerMinutes, timerSeconds);
+      document.getElementById("timer").textContent = formattedTime;
+    }
+    
+    function startStopwatch() {
+      stopwatchInterval = setInterval(updateStopwatch, 1000);
+    }
+    
+    function stopStopwatch() {
+      clearInterval(stopwatchInterval);
+    }
+    
+    function resetStopwatch() {
+      stopStopwatch();
+      stopwatchSeconds = 0;
+      stopwatchMinutes = 0;
+      stopwatchHours = 0;
+      document.getElementById("stopwatch").textContent = "00:00:00";
+    }
+    
+    function updateStopwatch() {
+      stopwatchSeconds++;
+      
+      if (stopwatchSeconds === 60) {
+        stopwatchSeconds = 0;
+        stopwatchMinutes++;
+      }
+      
+      if (stopwatchMinutes === 60) {
+        stopwatchMinutes = 0;
+        stopwatchHours++;
+      }
+      
+      const formattedTime = formatTime(stopwatchHours, stopwatchMinutes, stopwatchSeconds);
+      document.getElementById("stopwatch").textContent = formattedTime;
+    }
+    
+    function formatTime(hours, minutes, seconds) {
+      const formattedHours = padZero(hours);
+      const formattedMinutes = padZero(minutes);
+      const formattedSeconds = padZero(seconds);
+      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+    
+    function padZero(value) {
+      return value < 10 ? "0" + value : value;
+    }
+  </script>
+</body>
+</html>
